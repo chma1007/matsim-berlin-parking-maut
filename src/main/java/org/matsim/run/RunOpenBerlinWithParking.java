@@ -2,8 +2,10 @@ package org.matsim.run;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.events.PersonMoneyEvent;
 import org.matsim.api.core.v01.events.handler.PersonMoneyEventHandler;
+import org.matsim.api.core.v01.network.Link;
 import org.matsim.contrib.bicycle.BicycleConfigGroup;
 import org.matsim.contrib.parking.parkingcost.config.ParkingCostConfigGroup;
 import org.matsim.contrib.parking.parkingcost.module.ParkingCostModule;
@@ -39,6 +41,9 @@ public class RunOpenBerlinWithParking extends OpenBerlinScenario {
 	protected void prepareControler(Controler controler) {
 		super.prepareControler(controler); // 保留 emissions/scoring 等配置
 
+		// ✅ 在运行前为所有支持 car 的 link 添加 pc_car 属性
+		addParkingCostToLinks(controler.getScenario());
+
 		// 添加 ParkingCost 模块
 		controler.addOverridingModule(new ParkingCostModule());
 
@@ -53,6 +58,15 @@ public class RunOpenBerlinWithParking extends OpenBerlinScenario {
 				addControlerListenerBinding().toInstance(tracker);
 			}
 		});
+	}
+
+	// ✅ 新增：在所有允许 car 模式的 link 上添加 pc_car 属性
+	private void addParkingCostToLinks(Scenario scenario) {
+		for (Link link : scenario.getNetwork().getLinks().values()) {
+			if (link.getAllowedModes().contains("car")) {
+				link.getAttributes().putAttribute("pc_car", 2.50);  // 可自行改为不同数值
+			}
+		}
 	}
 
 	static class ParkingCostTracker implements PersonMoneyEventHandler, StartupListener, ShutdownListener {
