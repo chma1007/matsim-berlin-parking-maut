@@ -157,7 +157,7 @@
 		<param name="defaultDelimiter" value=";" />
 		<param name="insistingOnDeprecatedConfigVersion" value="false" />
 		<!-- "global" number of threads.  This number is used, e.g., for replanning, but NOT in QSim.  This can typically be set to as many cores as you have available, or possibly even slightly more. -->
-		<param name="numberOfThreads" value="16" />
+		<param name="numberOfThreads" value="8" />
 		<param name="randomSeed" value="4711" />
 	</module>
 	<module name="hermes" >
@@ -200,7 +200,7 @@
 		<param name="timeVariantNetwork" value="false" />
 	</module>
 	<module name="roadpricing">
-		<param name="tollLinksFile" value="D:/berlin/input/v6.4/roadpricing-1pct.xml" />
+		<param name="tollLinksFile" value="D:/berlin/input/v6.4/roadpricing/hundekopf_cordon_roadpricing_bothWays_10.0_euro.xml"/>
 	</module>
 
 	<module name="planInheritance" >
@@ -35930,7 +35930,7 @@
 		<!-- Default:true; Defines whether time mutation changes an activity's duration. -->
 		<param name="mutationAffectsDuration" value="true" />
 		<!-- Default:1800.0; Defines how many seconds a time mutation can maximally shift a time. -->
-		<param name="mutationRange" value="1800.0" />
+		<param name="mutationRange" value="7200.0" />
 		<!-- Mutation Range Step, default = 1 second -->
 		<param name="mutationRangeStep" value="1.0" />
 	</module>

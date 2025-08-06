@@ -57,7 +57,7 @@
 		<!-- Default=0. First Iteration of a simulation. -->
 		<param name="firstIteration" value="0" />
 		<!-- Default=1000. Last Iteration of a simulation. -->
-		<param name="lastIteration" value="50" />
+		<param name="lastIteration" value="100" />
 		<!-- Defines the interval for printing memory usage to the log in [seconds]. Must be
 		positive. Defaults to 60. -->
 		<param name="memoryObserverInterval" value="60" />
@@ -134,67 +134,38 @@
 		<!-- Specifies how often the counts comparison should be calculated and written. -->
 		<param name="writeCountsInterval" value="10" />
 	</module>
-	<!--	<module name="emissions" >-->
-	<!--		&lt;!&ndash; file with HBEFA vehicle type specific fleet average cold emission factors
-	&ndash;&gt;-->
-	<!--		<param name="averageFleetColdEmissionFactorsFile"
-	value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/r9230ru2n209r30u2fn0c9rn20n2rujkhkjhoewt84202.enc"
-	/>-->
-	<!--		&lt;!&ndash; file with HBEFA vehicle type specific fleet average warm emission factors
-	&ndash;&gt;-->
-	<!--		<param name="averageFleetWarmEmissionFactorsFile"
-	value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/7eff8f308633df1b8ac4d06d05180dd0c5fdf577.enc"
-	/>-->
-	<!--		&lt;!&ndash; file with HBEFA detailed cold emission factors &ndash;&gt;-->
-	<!--		<param name="detailedColdEmissionFactorsFile"
-	value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/82t7b02rc0rji2kmsahfwp933u2rfjlkhfpi2u9r20.enc"
-	/>-->
-	<!--		&lt;!&ndash; Should the calculation bases on average or detailed emission factors?-->
-	<!--			onlyTryDetailedElseAbort : try detailed values. Abort if values are not found. Requires
-	DETAILED emission factors.-->
-	<!--			tryDetailedThenTechnologyAverageElseAbort : try detailed values first, if not found try to
-	use semi-detailed values for 'vehicleType,technology,average,average', if then not found abort.
-	Requires DETAILED emission factors.-->
-	<!--			tryDetailedThenTechnologyAverageThenAverageTabletry detailed values first, if not found try
-	to use semi-detailed values for 'vehicleType,technology,average,average', if then not found try
-	lookup in average table. Requires DETAILED and AVERAGE emission factors.-->
-	<!--			directlyTryAverageTableonly calculate from average table. Requires AVERAGE emission
-	factors. Default is onlyTryDetailedElseAbort &ndash;&gt;-->
-	<!--		<param name="detailedVsAverageLookupBehavior"
-	value="tryDetailedThenTechnologyAverageThenAverageTable" />-->
-	<!--		&lt;!&ndash; file with HBEFA detailed warm emission factors &ndash;&gt;-->
-	<!--		<param name="detailedWarmEmissionFactorsFile"
-	value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/944637571c833ddcf1d0dfcccb59838509f397e6.enc"
-	/>-->
-	<!--		&lt;!&ndash; if true, the original fractional method from Hülsmann et al (2011) will be
-	used to calculate emission factors &ndash;&gt;-->
-	<!--		<param name="emissionsComputationMethod" value="StopAndGoFraction" />-->
-	<!--		&lt;!&ndash; if true, don't fail when average speed is higher than the link freespeed, but
-	cap it instead. &ndash;&gt;-->
-	<!--		<param name="handleHighAverageSpeeds" value="false" />-->
-	<!--		&lt;!&ndash; Define on which level the entries in the provided hbefa tables are checked for
-	consistency-->
-	<!--			allCombinations : check if entries for all combinations of HbefaTrafficSituation,
-	HbefaVehicleCategory, HbefaVehicleAttributes, HbefaComponent. are available in the table. It
-	only checks for parameters that are available in the table (e.g. if there is no HGV in the
-	table, it can also pass.-->
-	<!--			consistent : check if the entries for the two HbefaTrafficSituations 'StopAndGo' and
-	'FreeFlow' (nov 2020, may be subject to change) are consistently available in the table.-->
-	<!--			none : There is no consistency check. This option is NOT recommended and only for backward
-	capability to inputs from before spring 2020 .-->
-	<!--			Default is allCombinations &ndash;&gt;-->
-	<!--		<param name="hbefaTableConsistencyCheckingLevel" value="consistent" />-->
-	<!--		&lt;!&ndash; Each vehicle in matsim points to a VehicleType.  For the emissions package to
-	work, each VehicleType needs to contain corresponding information.  This switch determines
-	_where_ in VehicleType that information is contained.  default: asEngineInformationAttributes
-	&ndash;&gt;-->
-	<!--		<param name="hbefaVehicleDescriptionSource" value="asEngineInformationAttributes" />-->
-	<!--		&lt;!&ndash; if false, emission events will not appear in the events file. &ndash;&gt;-->
-	<!--		<param name="isWritingEmissionsEvents" value="true" />-->
-	<!--		&lt;!&ndash; Specifies the handling of non-scenario vehicles.  The options are: [ignore,
-	abort] Should eventually be extended by 'getVehiclesFromMobsim'. &ndash;&gt;-->
-	<!--		<param name="nonScenarioVehicles" value="abort" />-->
-	<!--	</module>-->
+	<module name="emissions" >
+		<!-- file with HBEFA vehicle type specific fleet average cold emission factors -->
+		<param name="averageFleetColdEmissionFactorsFile" value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/r9230ru2n209r30u2fn0c9rn20n2rujkhkjhoewt84202.enc" />
+		<!-- file with HBEFA vehicle type specific fleet average warm emission factors -->
+		<param name="averageFleetWarmEmissionFactorsFile" value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/7eff8f308633df1b8ac4d06d05180dd0c5fdf577.enc" />
+		<!-- file with HBEFA detailed cold emission factors -->
+		<param name="detailedColdEmissionFactorsFile" value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/82t7b02rc0rji2kmsahfwp933u2rfjlkhfpi2u9r20.enc" />
+		<!-- Should the calculation bases on average or detailed emission factors?
+			onlyTryDetailedElseAbort : try detailed values. Abort if values are not found. Requires DETAILED emission factors.
+			tryDetailedThenTechnologyAverageElseAbort : try detailed values first, if not found try to use semi-detailed values for 'vehicleType,technology,average,average', if then not found abort. Requires DETAILED emission factors.
+			tryDetailedThenTechnologyAverageThenAverageTabletry detailed values first, if not found try to use semi-detailed values for 'vehicleType,technology,average,average', if then not found try lookup in average table. Requires DETAILED and AVERAGE emission factors.
+			directlyTryAverageTableonly calculate from average table. Requires AVERAGE emission factors. Default is onlyTryDetailedElseAbort -->
+		<param name="detailedVsAverageLookupBehavior" value="tryDetailedThenTechnologyAverageThenAverageTable" />
+		<!-- file with HBEFA detailed warm emission factors -->
+		<param name="detailedWarmEmissionFactorsFile" value="https://svn.vsp.tu-berlin.de/repos/public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/944637571c833ddcf1d0dfcccb59838509f397e6.enc" />
+		<!-- if true, the original fractional method from Hülsmann et al (2011) will be used to calculate emission factors -->
+		<param name="emissionsComputationMethod" value="StopAndGoFraction" />
+		<!-- if true, don't fail when average speed is higher than the link freespeed, but cap it instead. -->
+		<param name="handleHighAverageSpeeds" value="false" />
+		<!-- Define on which level the entries in the provided hbefa tables are checked for consistency
+			allCombinations : check if entries for all combinations of HbefaTrafficSituation, HbefaVehicleCategory, HbefaVehicleAttributes, HbefaComponent. are available in the table. It only checks for parameters that are available in the table (e.g. if there is no HGV in the table, it can also pass.
+			consistent : check if the entries for the two HbefaTrafficSituations 'StopAndGo' and 'FreeFlow' (nov 2020, may be subject to change) are consistently available in the table.
+			none : There is no consistency check. This option is NOT recommended and only for backward capability to inputs from before spring 2020 .
+			Default is allCombinations -->
+		<param name="hbefaTableConsistencyCheckingLevel" value="consistent" />
+		<!-- Each vehicle in matsim points to a VehicleType.  For the emissions package to work, each VehicleType needs to contain corresponding information.  This switch determines _where_ in VehicleType that information is contained.  default: asEngineInformationAttributes -->
+		<param name="hbefaVehicleDescriptionSource" value="asEngineInformationAttributes" />
+		<!-- if false, emission events will not appear in the events file. -->
+		<param name="isWritingEmissionsEvents" value="true" />
+		<!-- Specifies the handling of non-scenario vehicles.  The options are: [ignore, abort] Should eventually be extended by 'getVehiclesFromMobsim'. -->
+		<param name="nonScenarioVehicles" value="abort" />
+	</module>
 	<module name="eventsManager">
 		<!-- Estimated number of events during mobsim run. An optional optimization hint for the
 		framework. -->
